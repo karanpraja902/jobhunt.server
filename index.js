@@ -10,6 +10,7 @@ import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 import externalJobsRoute from "./routes/externalJobs.route.js";
 import mixedJobsRoute from "./routes/mixedJobs.route.js";
+import healthRoute from "./routes/health.route.js";
 
 dotenv.config({});
 
@@ -33,6 +34,7 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 app.use("/api/v1/external-jobs", externalJobsRoute);
 app.use("/api/v1/mixed-jobs", mixedJobsRoute);
+app.use("/api/v1", healthRoute); // Health check endpoints
 const welcomeStrings = [
   "Hello Express!",
   "To learn more about Express on Vercel, visit https://vercel.com/docs/frameworks/backend/express",
@@ -42,8 +44,22 @@ app.get('/', (_req, res) => {
   })
 
 
-app.listen(PORT,()=>{
-    connectDB();
-    console.log(`Server running at port ${PORT}`);
-    console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
-})
+// Connect to database first, then start server
+const startServer = async () => {
+    try {
+        // Connect to MongoDB
+        await connectDB();
+        
+        // Start server only after DB connection is established
+        app.listen(PORT, () => {
+            console.log(`Server running at port ${PORT}`);
+            console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
+            console.log(`Accepting requests from: ${corsOptions.origin || 'multiple origins'}`);
+        });
+    } catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
+};
+
+startServer();
