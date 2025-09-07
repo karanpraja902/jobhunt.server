@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:'http://localhost:5173',
-    credentials:true
+    origin: process.env.CLIENT_URL,
+    credentials: true
 }
 
 app.use(cors(corsOptions));
@@ -44,9 +44,8 @@ app.get('/', (_req, res) => {
   })
 
 
-app.listen(PORT,(req,res)=>{
-    res.send("Server is running");
+app.listen(PORT,()=>{
     connectDB();
     console.log(`Server running at port ${PORT}`);
-    console.log(`Server running in ${process.env.NODE_ENV} mode`);
+    console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
 })

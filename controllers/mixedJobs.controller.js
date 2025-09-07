@@ -116,7 +116,7 @@ const fetchRemotiveJobs = async (limit = 10) => {
                 _id: `remotive_company_${job.company_name}`,
                 name: job.company_name,
                 location: 'Remote',
-                logo: job.company_logo_url
+                logo: null // Remotive logos have CORS issues, so we skip them
             },
             description: (job.description || '').replace(/<[^>]*>/g, '').substring(0, 200) + '...',
             location: 'Remote',
