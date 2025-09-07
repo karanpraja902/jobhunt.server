@@ -38,7 +38,8 @@ app.use("/api/v1/mixed-jobs", mixedJobsRoute);
 
 
 
-app.listen(PORT,()=>{
+app.listen(PORT,(req,res)=>{
+    res.send("Server is running");
     connectDB();
     console.log(`Server running at port ${PORT}`);
 })
