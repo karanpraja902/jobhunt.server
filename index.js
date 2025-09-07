@@ -25,7 +25,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const PORT = process.env.NODE_ENV|| process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 
 // api's
@@ -48,4 +48,5 @@ app.listen(PORT,(req,res)=>{
     res.send("Server is running");
     connectDB();
     console.log(`Server running at port ${PORT}`);
+    console.log(`Server running in ${process.env.NODE_ENV} mode`);
 })
