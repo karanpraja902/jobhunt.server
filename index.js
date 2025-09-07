@@ -35,7 +35,13 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 app.use("/api/v1/external-jobs", externalJobsRoute);
 app.use("/api/v1/mixed-jobs", mixedJobsRoute);
-
+const welcomeStrings = [
+  "Hello Express!",
+  "To learn more about Express on Vercel, visit https://vercel.com/docs/frameworks/backend/express",
+]
+app.get('/', (_req, res) => {
+    res.send(welcomeStrings.join('\n\n'))
+  })
 
 
 app.listen(PORT,(req,res)=>{
